@@ -7,7 +7,7 @@ require_once "include/php/db_conn.php";
  * Date: 3/14/2019
  * Time: 11:07 PM
  */
-
+session_start();
 $query = "SELECT * FROM users";
 mysqli_query($conn, $query) or die('Error querying database.');
 
@@ -26,3 +26,5 @@ $index_display = "<!DOCTYPE html>
 </body>
 </html>";
 echo $index_display;
+
+var_dump($_SESSION);
