@@ -8,23 +8,23 @@ require_once "include/php/db_conn.php";
  * Time: 11:07 PM
  */
 session_start();
-$query = "SELECT * FROM users";
-mysqli_query($conn, $query) or die('Error querying database.');
 
-$result = mysqli_query($conn, $query);
-
-while ($row = mysqli_fetch_array($result)) {
-    echo "First name : ".$row['first_name'] .'<br />'. 'Last name : ' . $row['last_name'].'<br />' . 'Mail : ' . $row['mail'] . ' ' .'<br />';
+if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
+    $login = "<a href='pag/logout.php'>Logout</a>";
+} else {
+    $login = "<a href='pag/login.php'>Login</a>";
 }
-
 $index_display = "<!DOCTYPE html>
 <html lang='en'>
-<head><title>Login system</title></head>
-<body>
-<div><a href='pag/login.php'>Login</a>
-<a href='pag/signup.php'>Sign-up</a></div>
-</body>
+    <head>
+        <title>Login system</title>
+    </head>
+    
+    <body>
+        <div>
+            $login
+            <a href='pag/signup.php'>Sign-up</a>
+        </div>
+    </body>
 </html>";
 echo $index_display;
-
-var_dump($_SESSION);

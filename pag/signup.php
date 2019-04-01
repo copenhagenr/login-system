@@ -6,6 +6,7 @@
  * Time: 11:04 PM
  */
 require_once "../include/php/db_conn.php";
+session_start();
 $error = '';
 if (isset($_POST['submit']) && $_POST['submit'] == 'signup') {
     if (isset($_POST['mail']) && !is_null($_POST['mail']) && isset($_POST['password']) && !is_null($_POST['password'])) {
@@ -20,17 +21,15 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'signup') {
         if ($count == 1) {
             $error = 'Account already exist for this mail';
         } else {
-            var_dump($_POST);
             $sql = "INSERT INTO users (mail, passwword, first_name, last_name, user_name, phone, address) VALUES (?,?,?,?,?,?,?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sssssss", $_POST['mail'], $_POST['password'], $_POST['first_name'], $_POST['last_name'], $_POST['user_name'], $_POST['phone'], $_POST['address']);
             $stmt->execute();
             $stmt->fetch();
-            var_dump($stmt->affected_rows);
             if( $stmt->affected_rows == 1) {
                 echo "Account was creating will be login automatic and redirect ...";
-                session_start();
-                $_SESSION['username'] = $_POST['mail'];
+                $_SESSION['login'] = true;
+                $_SEESION['mail'] = $_POST['mail'];
                 header("Location: ../index.php");
             } else {
                 $error = "Error at creating account please retry";
