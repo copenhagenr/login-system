@@ -8,11 +8,16 @@ require_once "include/php/db_conn.php";
  * Time: 11:07 PM
  */
 session_start();
+$user_page = '';
+$sign_up = '';
 
 if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
-    $login = "<a href='pag/logout.php'>Logout</a>";
+    $login_stage = "<a href='pag/logout.php'>Logout</a>";
+    $user_page = "<a href='pag/user_page.php'>Welcome ". $_SESSION['mail'] . "</a>";
+
 } else {
-    $login = "<a href='pag/login.php'>Login</a>";
+    $login_stage = "<a href='pag/login.php'>Login</a>";
+    $sign_up = "<a href='pag/signup.php'>Sign-up</a>";
 }
 $index_display = "<!DOCTYPE html>
 <html lang='en'>
@@ -22,8 +27,9 @@ $index_display = "<!DOCTYPE html>
     
     <body>
         <div>
-            $login
-            <a href='pag/signup.php'>Sign-up</a>
+            $sign_up
+            $user_page    
+            $login_stage       
         </div>
     </body>
 </html>";
