@@ -11,9 +11,9 @@ $error = '';
 if (isset($_POST['submit']) && $_POST['submit'] == 'signup') {
     if (isset($_POST['mail']) && !is_null($_POST['mail']) && isset($_POST['password']) && !is_null($_POST['password'])) {
         //check account exist yet
-        $sql = "SELECT count(*) FROM users WHERE mail = ? and passwword = ?";
+        $sql = "SELECT count(*) FROM users WHERE mail = ? ";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ss', $_POST["mail"], $_POST["password"]);
+        $stmt->bind_param('s', $_POST["mail"]);
         $stmt->execute();
         $stmt->bind_result($count);
         $stmt->fetch();
